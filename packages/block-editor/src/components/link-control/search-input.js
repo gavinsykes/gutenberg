@@ -4,22 +4,11 @@
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Button, Notice } from '@wordpress/components';
-import { LEFT, RIGHT, UP, DOWN, BACKSPACE, ENTER } from '@wordpress/keycodes';
 
 /**
  * Internal dependencies
  */
 import { URLInput } from '../';
-
-const handleLinkControlOnKeyDown = ( event ) => {
-	const { keyCode } = event;
-
-	if ( [ LEFT, DOWN, RIGHT, UP, BACKSPACE, ENTER ].indexOf( keyCode ) > -1 ) {
-		// Stop the key event from propagating up to ObserveTyping.startTypingInTextField.
-		event.stopPropagation();
-	}
-};
-
 
 const LinkControlSearchInput = ( {
 	value,
@@ -53,12 +42,6 @@ const LinkControlSearchInput = ( {
 					className="block-editor-link-control__search-input"
 					value={ value }
 					onChange={ selectItemHandler }
-					onKeyDown={ ( event ) => {
-						if ( event.keyCode === ENTER ) {
-							return;
-						}
-						handleLinkControlOnKeyDown( event );
-					} }
 					placeholder={ __( 'Search or type url' ) }
 					__experimentalRenderSuggestions={ renderSuggestions }
 					__experimentalFetchLinkSuggestions={ fetchSuggestions }
