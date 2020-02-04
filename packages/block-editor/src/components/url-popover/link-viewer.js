@@ -9,7 +9,6 @@ import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import { ExternalLink, Button } from '@wordpress/components';
 import { safeDecodeURI, filterURLForDisplay } from '@wordpress/url';
-import { pencil } from '@wordpress/icons';
 
 function LinkViewerUrl( { url, urlLabel, className } ) {
 	const linkClassName = classnames(
@@ -34,6 +33,7 @@ export default function LinkViewer( {
 	onEditLinkClick,
 	url,
 	urlLabel,
+	iconButton = true,
 	...props
 } ) {
 	return (
@@ -51,10 +51,13 @@ export default function LinkViewer( {
 			/>
 			{ onEditLinkClick && (
 				<Button
-					icon={ pencil }
-					label={ __( 'Edit' ) }
+					icon={ iconButton ? 'edit' : false }
+					isSecondary={ iconButton ? false : true }
 					onClick={ onEditLinkClick }
-				/>
+					className="block-editor-link-control__search-item-action block-editor-link-control__search-item-action--edit"
+				>
+					{ iconButton ? '' : __( 'Edit' ) }
+				</Button>
 			) }
 		</div>
 	);

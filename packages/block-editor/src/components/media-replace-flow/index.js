@@ -16,7 +16,7 @@ import {
 import { LEFT, RIGHT, UP, DOWN, BACKSPACE, ENTER } from '@wordpress/keycodes';
 import { useSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
-import { link, upload } from '@wordpress/icons';
+import { upload } from '@wordpress/icons';
 
 /**
  * Internal dependencies
@@ -36,7 +36,6 @@ const MediaReplaceFlow = ( {
 	onError,
 	name = __( 'Replace' ),
 } ) => {
-	const [ showURLInput, setShowURLInput ] = useState( false );
 	const [ showEditURLInput, setShowEditURLInput ] = useState( false );
 	const [ mediaURLValue, setMediaURLValue ] = useState( mediaURL );
 	const mediaUpload = useSelect( ( select ) => {
@@ -96,6 +95,7 @@ const MediaReplaceFlow = ( {
 	if ( showEditURLInput ) {
 		urlInputUIContent = (
 			<LinkEditor
+				className="block-editor-media-replace-flow__link-editor"
 				onKeyDown={ stopPropagationRelevantKeys }
 				onKeyPress={ stopPropagation }
 				value={ mediaURLValue }
@@ -111,14 +111,20 @@ const MediaReplaceFlow = ( {
 		);
 	} else {
 		urlInputUIContent = (
-			<LinkViewer
-				isFullWidth={ true }
-				className="block-editor-media-replace-flow__link-viewer"
-				url={ mediaURLValue }
-				onEditLinkClick={ () =>
-					setShowEditURLInput( ! showEditURLInput )
-				}
-			/>
+			<>
+				<span className="block-editor-media-replace-flow__image-url-label">
+					{ __( ' Current media URL:' ) }
+				</span>
+				<LinkViewer
+					isFullWidth={ true }
+					iconButton={ false }
+					className="block-editor-media-replace-flow__link-viewer"
+					url={ mediaURLValue }
+					onEditLinkClick={ () =>
+						setShowEditURLInput( ! showEditURLInput )
+					}
+				/>
+			</>
 		);
 	}
 
@@ -171,19 +177,8 @@ const MediaReplaceFlow = ( {
 								} }
 							/>
 						</MediaUploadCheck>
-						{ onSelectURL && (
-							<MenuItem
-								icon={ link }
-								onClick={ () =>
-									setShowURLInput( ! showURLInput )
-								}
-								aria-expanded={ showURLInput }
-							>
-								<div> { __( 'Insert from URL' ) } </div>
-							</MenuItem>
-						) }
 					</NavigableMenu>
-					{ showURLInput && (
+					{ onSelectURL && (
 						<div className="block-editor-media-flow__url-input">
 							{ urlInputUIContent }
 						</div>
