@@ -517,7 +517,7 @@ describe( 'Creating Entities (eg: Posts, Pages)', () => {
 			let resolvedEntity;
 			let currentLinkLabel;
 
-			const createEntity = ( title ) =>
+			const createSuggestion = ( title ) =>
 				new Promise( ( resolve ) => {
 					resolver = resolve;
 					resolvedEntity = {
@@ -537,7 +537,7 @@ describe( 'Creating Entities (eg: Posts, Pages)', () => {
 						onChange={ ( suggestion ) => {
 							setLink( suggestion );
 						} }
-						createEntity={ createEntity }
+						createSuggestion={ createSuggestion }
 					/>
 				);
 			};
@@ -597,7 +597,7 @@ describe( 'Creating Entities (eg: Posts, Pages)', () => {
 				expect.stringContaining( 'Creating' )
 			);
 
-			// Resolve the `createEntity` promise
+			// Resolve the `createSuggestion` promise
 			await act( async () => {
 				resolver( resolvedEntity );
 			} );
@@ -635,7 +635,7 @@ describe( 'Creating Entities (eg: Posts, Pages)', () => {
 					onChange={ ( suggestion ) => {
 						setLink( suggestion );
 					} }
-					createEntity={ ( title ) =>
+					createSuggestion={ ( title ) =>
 						Promise.resolve( {
 							title,
 							id: 123,
@@ -708,11 +708,11 @@ describe( 'Creating Entities (eg: Posts, Pages)', () => {
 
 	describe( 'Do not show create option', () => {
 		it.each( [ [ undefined ], [ null ], [ false ] ] )(
-			'should not show not show an option to create an entity when "createEntity" handler is %s',
+			'should not show not show an option to create an entity when "createSuggestion" handler is %s',
 			async ( handler ) => {
 				act( () => {
 					render(
-						<LinkControl createEntity={ handler } />,
+						<LinkControl createSuggestion={ handler } />,
 						container
 					);
 				} );
@@ -745,7 +745,7 @@ describe( 'Creating Entities (eg: Posts, Pages)', () => {
 				render(
 					<LinkControl
 						showInitialSuggestions={ true } // should show even if we're not showing initial suggestions
-						createEntity={ jest.fn() }
+						createSuggestion={ jest.fn() }
 					/>,
 					container
 				);
@@ -784,7 +784,7 @@ describe( 'Creating Entities (eg: Posts, Pages)', () => {
 			async ( inputText ) => {
 				act( () => {
 					render(
-						<LinkControl createEntity={ jest.fn() } />,
+						<LinkControl createSuggestion={ jest.fn() } />,
 						container
 					);
 				} );
@@ -828,11 +828,11 @@ describe( 'Creating Entities (eg: Posts, Pages)', () => {
 				throw new Error( 'API response returned invalid entity.' ); // this can be any error and msg
 			};
 
-			const createEntity = () => Promise.reject( throwsError() );
+			const createSuggestion = () => Promise.reject( throwsError() );
 
 			act( () => {
 				render(
-					<LinkControl createEntity={ createEntity } />,
+					<LinkControl createSuggestion={ createSuggestion } />,
 					container
 				);
 			} );
