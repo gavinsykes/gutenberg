@@ -515,7 +515,6 @@ describe( 'Creating Entities (eg: Posts, Pages)', () => {
 		async ( entityNameText ) => {
 			let resolver;
 			let resolvedEntity;
-			let currentLinkLabel;
 
 			const createSuggestion = ( title ) =>
 				new Promise( ( resolve ) => {
@@ -588,7 +587,7 @@ describe( 'Creating Entities (eg: Posts, Pages)', () => {
 			const loadingIndicator = container.querySelector(
 				'.block-editor-link-control__loading'
 			);
-			currentLinkLabel = container.querySelector(
+			const currentLinkLabel = container.querySelector(
 				'[aria-label="Currently selected"]'
 			);
 
@@ -604,12 +603,8 @@ describe( 'Creating Entities (eg: Posts, Pages)', () => {
 
 			await eventLoopTick();
 
-			// Test the new entity was displayed.
-			currentLinkLabel = container.querySelector(
-				'[aria-label="Currently selected"]'
-			);
 			const currentLink = container.querySelector(
-				`[aria-labelledby="${ currentLinkLabel.id }"]`
+				'[aria-label="Currently selected"]'
 			);
 
 			const currentLinkHTML = currentLink.innerHTML;
@@ -691,12 +686,8 @@ describe( 'Creating Entities (eg: Posts, Pages)', () => {
 
 		await eventLoopTick();
 
-		const currentLinkLabel = container.querySelector(
-			'[aria-label="Currently selected"]'
-		);
-
 		const currentLink = container.querySelector(
-			`[aria-labelledby="${ currentLinkLabel.id }"]`
+			'[aria-label="Currently selected"]'
 		);
 
 		const currentLinkHTML = currentLink.innerHTML;
