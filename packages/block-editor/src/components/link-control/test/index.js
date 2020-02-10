@@ -106,6 +106,7 @@ describe( 'Basic rendering', () => {
 			const editButton = container.querySelector(
 				'.block-editor-link-control__search-item-action'
 			);
+
 			act( () => {
 				Simulate.click( editButton );
 			} );
