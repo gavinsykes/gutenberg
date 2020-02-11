@@ -167,7 +167,9 @@ class BlockListBlock extends Component {
 					? styles.childOfSelected
 					: styles.childOfSelectedLeaf ),
 				...dashedBorderStyle,
-				...( ! isLastBlock && styles.marginVerticalChild ),
+				...( ! isLastBlock &&
+					this.props.name !== 'core/column' &&
+					styles.marginVerticalChild ),
 			};
 		}
 
