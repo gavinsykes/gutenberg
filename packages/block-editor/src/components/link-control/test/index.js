@@ -104,9 +104,9 @@ describe( 'forceIsEditingLink', () => {
 		} );
 
 		// Click the "Edit" button to trigger into the editing mode.
-		const editButton = container.querySelector(
-			'.block-editor-link-control__search-item-action'
-		);
+		const editButton = Array.from(
+			container.querySelectorAll( 'button' )
+		).find( ( button ) => button.innerHTML === 'Edit' );
 
 		act( () => {
 			Simulate.click( editButton );
