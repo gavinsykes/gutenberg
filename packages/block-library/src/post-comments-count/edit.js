@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
  * WordPress dependencies
  */
 import { useEntityId } from '@wordpress/core-data';
@@ -6,7 +11,7 @@ import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 
-function PostCommentsCountDisplay() {
+function PostCommentsCountDisplay( { className } ) {
 	const postId = useEntityId( 'postType', 'post' );
 	const [ commentsCount, setCommentsCount ] = useState();
 	useEffect( () => {
@@ -23,12 +28,21 @@ function PostCommentsCountDisplay() {
 			}
 		} );
 	}, [ postId ] );
-	return commentsCount !== undefined && commentsCount;
+	return (
+		<span
+			className={ classnames(
+				'wp-block-post-comments-count',
+				className
+			) }
+		>
+			{ commentsCount !== undefined && commentsCount }
+		</span>
+	);
 }
 
-export default function PostCommentsCountEdit() {
+export default function PostCommentsCountEdit( { className } ) {
 	if ( ! useEntityId( 'postType', 'post' ) ) {
 		return 'Post Comments Count Placeholder';
 	}
-	return <PostCommentsCountDisplay />;
+	return <PostCommentsCountDisplay className={ className } />;
 }
