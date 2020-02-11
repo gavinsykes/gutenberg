@@ -64,69 +64,69 @@ describe( 'Basic rendering', () => {
 		expect( searchInput ).not.toBeNull();
 		expect( container.innerHTML ).toMatchSnapshot();
 	} );
+} );
 
-	describe( 'forceIsEditingLink', () => {
-		const isEditing = () =>
-			!! container.querySelector( 'input[aria-label="URL"]' );
+describe( 'forceIsEditingLink', () => {
+	const isEditing = () =>
+		!! container.querySelector( 'input[aria-label="URL"]' );
 
-		it( 'undefined', () => {
-			act( () => {
-				render(
-					<LinkControl value={ { url: 'https://example.com' } } />,
-					container
-				);
-			} );
-
-			expect( isEditing() ).toBe( false );
-		} );
-
-		it( 'true', () => {
-			act( () => {
-				render(
-					<LinkControl
-						value={ { url: 'https://example.com' } }
-						forceIsEditingLink
-					/>,
-					container
-				);
-			} );
-
-			expect( isEditing() ).toBe( true );
-		} );
-
-		it( 'false', () => {
-			act( () => {
-				render(
-					<LinkControl value={ { url: 'https://example.com' } } />,
-					container
-				);
-			} );
-
-			// Click the "Edit" button to trigger into the editing mode.
-			const editButton = container.querySelector(
-				'.block-editor-link-control__search-item-action'
+	it( 'undefined', () => {
+		act( () => {
+			render(
+				<LinkControl value={ { url: 'https://example.com' } } />,
+				container
 			);
-
-			act( () => {
-				Simulate.click( editButton );
-			} );
-
-			expect( isEditing() ).toBe( true );
-
-			// If passed `forceIsEditingLink` of `false` while editing, should
-			// forcefully reset to the preview state.
-			act( () => {
-				render(
-					<LinkControl
-						value={ { url: 'https://example.com' } }
-						forceIsEditingLink={ false }
-					/>,
-					container
-				);
-			} );
-
-			expect( isEditing() ).toBe( false );
 		} );
+
+		expect( isEditing() ).toBe( false );
+	} );
+
+	it( 'true', () => {
+		act( () => {
+			render(
+				<LinkControl
+					value={ { url: 'https://example.com' } }
+					forceIsEditingLink
+				/>,
+				container
+			);
+		} );
+
+		expect( isEditing() ).toBe( true );
+	} );
+
+	it( 'false', () => {
+		act( () => {
+			render(
+				<LinkControl value={ { url: 'https://example.com' } } />,
+				container
+			);
+		} );
+
+		// Click the "Edit" button to trigger into the editing mode.
+		const editButton = container.querySelector(
+			'.block-editor-link-control__search-item-action'
+		);
+
+		act( () => {
+			Simulate.click( editButton );
+		} );
+
+		expect( isEditing() ).toBe( true );
+
+		// If passed `forceIsEditingLink` of `false` while editing, should
+		// forcefully reset to the preview state.
+		act( () => {
+			render(
+				<LinkControl
+					value={ { url: 'https://example.com' } }
+					forceIsEditingLink={ false }
+				/>,
+				container
+			);
+		} );
+
+		expect( isEditing() ).toBe( false );
 	} );
 } );
 
