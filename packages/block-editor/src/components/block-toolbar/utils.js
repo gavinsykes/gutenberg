@@ -158,6 +158,7 @@ export function useSuperExperimentalToolbarPositioning( { ref } ) {
 		if ( ! node ) return;
 
 		const targetNode = node.parentElement;
+		if ( ! targetNode ) return;
 
 		const { x: containerX, right: containerRight } = getCoords(
 			containerNode
@@ -192,7 +193,7 @@ export function useSuperExperimentalToolbarPositioning( { ref } ) {
 
 		if ( nextTranslateX ) {
 			const translateX = Math.round( nextTranslateX );
-			targetNode.style.transform = `translateX(${ translateX }}px)`;
+			targetNode.style.transform = `translateX(${ translateX }px)`;
 		}
 
 		targetNode.style.opacity = 1;
@@ -237,7 +238,7 @@ function useRequestAnimationFrameLoop( callback ) {
 	}, [ rafLoopRef ] );
 }
 
-function getCoords( { node } ) {
+function getCoords( node ) {
 	const { x, left, width } = node.getBoundingClientRect();
 
 	return {
